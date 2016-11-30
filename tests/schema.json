@@ -1,0 +1,47 @@
+{
+      "test_url": [{
+          "test_name": ""
+        , "custom_setup": "function(){}"
+        , "custom_teardown": "function(){}"
+        , "urls": [{
+              "url": ""
+            , "request_type": "GET"
+        }]
+        , "formdata": [{
+              "key": ""
+            , "value": ""
+        }]
+        , "headers": [{
+              "key": ""
+            , "value": ""
+        }]
+        , "timeout_after": 3000
+        , "max_redirects": 0
+        , "expected_status_code": 200
+        , "expected_encoding": "utf-8"
+        , "expected_links": [""]
+        , "unexpected_links": [""]
+        , "expected_text": [{
+              "text": ""
+            , "xpath": ""
+            , "count": -1
+            , "min_length": -1
+            , "max_length": -1
+        }]
+        , "expected_elements": [{
+              "element": ""
+            , "count": -1
+        }]
+        , "expected_numbers": [{
+              "xpath": ""
+            , "min": 0
+            , "max": 0
+            , "count": -1
+        }]
+        , "image_details": [{
+            "filesize": -1
+            , "width": -1
+            , "height": -1
+        }]
+    }]
+}

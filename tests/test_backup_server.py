@@ -6,33 +6,33 @@ import re
 
 class TestIATIBackupServer:
 
-    @classmethod
-    def setup_class(self):
-        """
-        Create a SSH client for use by test methods.
-        Login credentials are stored as environment variables.
-        """
-        hostname = os.environ["backup_server_hostname"]
-        username = os.environ["backup_server_username"]
-        password = os.environ["backup_server_password"]
+    # @classmethod
+    # def setup_class(self):
+    #     """
+    #     Create a SSH client for use by test methods.
+    #     Login credentials are stored as environment variables.
+    #     """
+    #     hostname = os.environ["backup_server_hostname"]
+    #     username = os.environ["backup_server_username"]
+    #     password = os.environ["backup_server_password"]
 
-        try:
-            self.client = paramiko.SSHClient()
-            self.client.load_system_host_keys()
-            self.client.connect(hostname, username=username, password=password, timeout=5)
-        except AuthenticationException:
-            print("Authentication failed, please verify your credentials: %s")
-        except SSHException as sshException:
-            print("Unable to establish SSH connection: %s" % sshException)
-        except BadHostKeyException as badHostKeyException:
-            print("Unable to verify server's host key: %s" % badHostKeyException)
-        except Exception as e:
-            print("Operation error: %s" % e)
+    #     try:
+    #         self.client = paramiko.SSHClient()
+    #         self.client.load_system_host_keys()
+    #         self.client.connect(hostname, username=username, password=password, timeout=5)
+    #     except AuthenticationException:
+    #         print("Authentication failed, please verify your credentials: %s")
+    #     except SSHException as sshException:
+    #         print("Unable to establish SSH connection: %s" % sshException)
+    #     except BadHostKeyException as badHostKeyException:
+    #         print("Unable to verify server's host key: %s" % badHostKeyException)
+    #     except Exception as e:
+    #         print("Operation error: %s" % e)
 
-        stdin, stdout, stderr = self.client.exec_command("df /dev/xvda1 | awk '{print $4}' | sed -n 2p | xargs echo -n")
+    #     stdin, stdout, stderr = self.client.exec_command("df /dev/xvda1 | awk '{print $4}' | sed -n 2p | xargs echo -n")
 
-        disk_space_available = int(stdout.read())
-        assert disk_space_available < 0  # Should fail, in order to view output
+    #     disk_space_available = int(stdout.read())
+    #     assert disk_space_available < 0  # Should fail, in order to view output
 
     def test_ping(self):
         """
@@ -45,14 +45,29 @@ class TestIATIBackupServer:
 
         assert result == 0  # 0 indicates the network is active
 
-    def test_at_least_1GB_disk_space_available(self):
+    def test_setup(self):
         """
-        Test that there is sufficient space available for future backups.
-        Filters the output of 'df' to return the KBs available to the server's main disk.
+        Create a SSH client for use by test methods.
+        Login credentials are stored as environment variables.
         """
+        hostname = os.environ["backup_server_hostname"]
+        username = os.environ["backup_server_username"]
+        password = os.environ["backup_server_password"]
 
-        stdin, stdout, stderr = self.client.exec_command("df /dev/xvda1 | awk '{print $4}' | sed -n 2p | xargs echo -n")
+        try:
+            client = paramiko.SSHClient()
+            client.load_system_host_keys()
+            client.connect(hostname, username=username, password=password, timeout=5)
+        except AuthenticationException:
+            print("Authentication failed, please verify your credentials: %s")
+        except SSHException as sshException:
+            print("Unable to establish SSH connection: %s" % sshException)
+        except BadHostKeyException as badHostKeyException:
+            print("Unable to verify server's host key: %s" % badHostKeyException)
+        except Exception as e:
+            print("Operation error: %s" % e)
+
+        stdin, stdout, stderr = client.exec_command("df /dev/xvda1 | awk '{print $4}' | sed -n 2p | xargs echo -n")
 
         disk_space_available = int(stdout.read())
-
-        assert disk_space_available > 1000000  # 1000000KB ~ 1GB
+        assert disk_space_available < 0  # Should fail, in order to view output

@@ -13,11 +13,21 @@ IATI Website Tests
 Introduction
 ------------
 
-This repository contains tests of the live websites.
+This repository contains smoke tests and sanity checks for all live IATI websites and web tools.
 
-Currently only the dashboard is tested.
+The output of tests can be seen at: https://travis-ci.org/IATI/IATI-Website-Tests
 
-These tests are run daily by Travis `cron jobs <https://docs.travis-ci.com/user/cron-jobs/>`_: https://travis-ci.org/IATI/IATI-Website-Tests
+
+Technology Overview
+-------------------
+
+Tests are written using `pytest <http://doc.pytest.org>`_.
+
+Most tests are designed to obtain HTML and associated content from IATI websites, using the `requests library <http://docs.python-requests.org>`_. Additional tests on the status of backups are made using the `paramiko module <http://www.paramiko.org>`_, which checks the status of expected backup files via an SSH connection.
+
+These tests are run daily (at around 12noon) using Travis `cron jobs <https://docs.travis-ci.com/user/cron-jobs/>`_.
+
+For a more detailed of the test architecture, view the README under `tests`.
 
 
 Installation
@@ -36,6 +46,12 @@ Installation
 
 	# Install requirements
 	pip install -r requirements.txt
+
+	# Login credentials for the IATI backup server are stored as environment variables.
+	# Add these lines to the end of your virtualenv set-up script - i.e. pyenv/bin/activate
+	export backup_server_hostname='[YOUR_HOSTNAME]'
+	export backup_server_username='[YOUR_USERNAME]'
+	export backup_server_password='[YOUR_PASSWORD]'
 
 	# Run the tests
 	py.test tests/

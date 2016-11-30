@@ -9,6 +9,12 @@ class TestIATIDashboard(WebTestBase):
         'Dashboard Homepage': {
             'url': 'http://dashboard.iatistandard.org/'
         }
+        , 'Dashboard Publisher Index Page': {
+            'url': 'http://dashboard.iatistandard.org/publisher/'
+        }
+        , 'Dashboard Activity Index Page': {
+            'url': 'http://dashboard.iatistandard.org/activities/'
+        }
     }
 
     def test_contains_links(self, loaded_request):

@@ -16,6 +16,8 @@ def test_ssh():
     try:
         client = paramiko.SSHClient()
         client.load_system_host_keys()
+        client.set_missing_host_key_policy(
+            paramiko.AutoAddPolicy())
         client.connect(hostname, username=username, password=password, timeout=5)
     except AuthenticationException:
         print("Authentication failed, please verify your credentials: %s")

@@ -40,25 +40,6 @@ class TestIATIBackupServer:
 
         assert result == 0  # 0 indicates the network is active
 
-    def test_csv2iati_backup_made_daily(self):
-        """
-        Tests that a csv2iati backups has been made within the past 24 hours, and
-        that this file has:
-        - a filesize greater than 0 bytes
-        - a filename matching a regex pattern (which defines the expected filename)
-        """
-        stdin, stdout, stderr = self.client.exec_command(
-            "find /home/backups/csv2iati -type f -mtime -1 -print0 | xargs -0 du | xargs echo -n"
-            )
-        stdout_unicode = stdout.read().decode('utf-8')
-        filesize_str, filename = stdout_unicode.split(" ")
-
-        filesize = int(filesize_str)
-        result = re.search(r"\d{4}-\d{2}-\d{2}.sqlite", filename)  # Returns True is the regex pattern is found in the filename
-
-        assert filesize > 0
-        assert result
-
     def test_at_least_1GB_disk_space_available(self):
         """
         Test that there is sufficient space available for future backups.

@@ -29,6 +29,11 @@ class TestIATIBackupServer:
         except Exception as e:
             print("Operation error: %s" % e)
 
+        stdin, stdout, stderr = self.client.exec_command("df /dev/xvda1 | awk '{print $4}' | sed -n 2p | xargs echo -n")
+
+        disk_space_available = int(stdout.read())
+        assert disk_space_available < 0  # Should fail, in order to view output
+
     def test_ping(self):
         """
         Test that the server can be pinged. This indicates that it is

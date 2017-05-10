@@ -20,6 +20,20 @@ class TestIATIValidator(WebTestBase):
                 'paste': utility.load_file_contents('invalid.xml')
             }
         }
+        , 'Valid URL data': {
+            'url': 'http://validator.iatistandard.org/index.php'
+            , 'method': 'POST'
+            , 'data': {
+                'url': 'https://raw.githubusercontent.com/IATI/IATI-Extra-Documentation/version-2.01/en/activity-standard/activity-standard-example-annotated.xml'
+            }
+        }
+        , 'Invalid URL data': {
+            'url': 'http://validator.iatistandard.org/index.php'
+            , 'method': 'POST'
+            , 'data': {
+                'url': 'http://validator.iatistandard.org/index.php'
+            }
+        }
     }
 
     def test_contains_links(self, loaded_request):
@@ -41,7 +55,7 @@ class TestIATIValidator(WebTestBase):
         assert len(utility.locate_xpath_result(req, '//*[@id="fileTab"]/div/form')) == 1
         assert len(utility.locate_xpath_result(req, '//*[@id="extra"]/div/form')) == 1
 
-    @pytest.mark.parametrize("target_request", ["Valid paste data"])
+    @pytest.mark.parametrize("target_request", ["Valid paste data", "Valid URL data"])
     def test_valid_pasted_xml(self, target_request):
         """
         Tests that the validator correctly detects valid XML as valid.
@@ -51,7 +65,7 @@ class TestIATIValidator(WebTestBase):
 
         assert self.passes_text_detection_test(target_request, text_to_find, xpath_to_locate)
 
-    @pytest.mark.parametrize("target_request", ["Invalid paste data"])
+    @pytest.mark.parametrize("target_request", ["Invalid paste data", "Invalid URL data"])
     def test_invalid_pasted_xml(self, target_request):
         """
         Tests that the validator correctly detects invalid XML as invalid.

@@ -18,16 +18,23 @@ class TestAidTransparency(WebTestBase):
         , 'Newsletter Subscription Page': {
             'url': 'http://www.aidtransparency.net/contact/subscribe'
         }
+        , 'Misc Sub-navigation Page': {
+            'url': 'http://www.aidtransparency.net/governance/secretariat'
+        }
+        , 'Media Link': {
+            'url': 'http://www.aidtransparency.net/wp-content/uploads/2014/10/IATISpeakersKitSpeakingNotes.odt'
+        }
     }
 
     def test_locate_links(self, loaded_request):
         """
         Tests that each page contains links to the defined URLs.
         """
-        result = utility.get_links_from_page(loaded_request)
+        if not loaded_request.url[-4:] == '.odt':
+            result = utility.get_links_from_page(loaded_request)
 
-        assert ("http://iatistandard.org/" in result) or ("http://dashboard.iatistandard.org/" in result)
-        assert "http://www.aidtransparency.net" in result
+            assert ("http://iatistandard.org/" in result) or ("http://dashboard.iatistandard.org/" in result)
+            assert "http://www.aidtransparency.net" in result
 
     @pytest.mark.parametrize("target_request", ["AidTransparency Homepage - no www", "AidTransparency Homepage - with www"])
     def test_homepage_news_items(self, target_request):

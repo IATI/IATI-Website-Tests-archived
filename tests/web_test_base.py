@@ -4,13 +4,43 @@ import requests
 from utility import utility
 
 class WebTestBase:
+    """This is a base class for all web tests.
+
+    Attributes:
+        requests_to_load (dict):    A dictionary of web requests required for tests.
+            Values within the dictionary are themselves dictionaries holding
+            further information about the request.
+            {
+                'test_name': {
+                    'url (str)': The URL to load for this test
+                    , 'min_response_size (int, optional)': An integer value
+                        specifying the minimum size in bytes that the response
+                        should be.
+                        If not be set, a default value is utilised.
+                    , 'method (str, optional)': A string stating the HTTP method
+                        to be used by the request. Defaults to `GET`.
+                        Additionally supports `POST`.
+                    , 'data (optional)': {
+                        'key': 'value'
+                        , 'key2': 'value2'
+                        , ...
+                            A dictionary containing any data to send with a POST
+                            request.
+                    }
+                }
+            }
+        loaded_requests (dict):     A dictionary of web requests that have been loaded.
+            The keys to this dictionary are the `test_name` keys from
+            `requests_to_load`.
+            The values are `Request` objects from the `requests` library.
+        initial_num_urls_to_test (int): The number of URLs specified within this
+            base class. Must not be overwritten by child classes.
+            Used within a test to ensure the class is being inherited from
+            correctly, with child classes defining their own requests_to_load.
+    """
+
     requests_to_load = dict()
     initial_num_urls_to_test = len(requests_to_load)
-    """
-    Will hold request objects from loading each of the URLS in self.urls
-    Keys are the urls themselves
-    Values are the request objects
-    """
     loaded_requests = dict()
 
     def loaded_request_from_test_name(self, test_name):
@@ -86,7 +116,10 @@ class WebTestBase:
             min_response_size = 4000
         req = self.loaded_request_from_test_name(request_to_load)
 
-        result = req.content.decode(req.encoding)
+        if req.encoding:
+            result = req.content.decode(req.encoding)
+        else:
+            result = req.content.decode()
 
         assert len(result) >= min_response_size
 

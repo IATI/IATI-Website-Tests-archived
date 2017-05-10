@@ -1,14 +1,18 @@
 language: python
 cache: pip
 python:
-  - "3.4"
+- '3.4'
 install:
-  - pip install -U pip wheel
-  - pip install -r requirements.txt
+- pip install -U pip wheel
+- pip install -r requirements.txt
 script: py.test
 notifications:
   email:
     recipients:
-      - code@iatistandard.org
+    - code@iatistandard.org
+    on_success: change
+    on_failure: always
+  slack:
+    secure: bBzSviJBlwk6tt9lx/y1//04yy3cmgJEAGvUPZlCutMrmDEUQkkILN+6puJQ4PGts5wIZVhEVMwaIEjW3rW9qYzgrBlpr0AgggNuPQs1hprgQSu4Re4eShx+potxVTdVnOwro5WMIFLi8Ef9tNYkddvBmLdz/sK2v1CrQk+bNHU=
     on_success: change
     on_failure: always

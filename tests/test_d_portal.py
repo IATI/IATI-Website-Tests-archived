@@ -8,3 +8,11 @@ class TestDPortal(WebTestBase):
             , 'min_response_size': 1100
         }
     }
+
+    @pytest.mark.xfail(strict=True)
+    def test_200_response(self, loaded_request):
+        super(TestDPortal, self).test_200_response(loaded_request)
+
+    @pytest.mark.xfail(strict=True)
+    def test_non_tiny_response(self, loaded_request):
+        super(TestDPortal, self).test_non_tiny_response(loaded_request)

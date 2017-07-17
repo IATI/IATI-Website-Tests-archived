@@ -1,6 +1,6 @@
-lxml==3.7.1
-paramiko==2.1.1
-pytest==3.0.5
-python-dateutil==2.6.0
+lxml==3.7.1 # rq.filter: <4.0
+paramiko==2.1.1 # rq.filter: <3.0
+pytest==3.0.5 # rq.filter: <4.0
+python-dateutil==2.6.0 # rq.filter: <3.0
 pytz==2016.10
-requests==2.12.4
+requests==2.12.4 # rq.filter: <3.0

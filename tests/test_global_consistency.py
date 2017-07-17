@@ -12,9 +12,6 @@ class TestGlobalConsistency(WebTestBase):
         , 'IATI Registry - Organisation Dataset Page': {
             'url': 'https://iatiregistry.org/dataset?q=&filetype=Organisation'
         }
-        , 'IATI Registry - organization Dataset Page': {
-            'url': 'https://iatiregistry.org/dataset?q=&filetype=organization'
-        }
         , 'IATI Dashboard - Homepage': {
             'url': 'http://dashboard.iatistandard.org/'
         }
@@ -94,14 +91,6 @@ class TestGlobalConsistency(WebTestBase):
     def registry_organisation_file_count(cls):
         return cls._locate_int_on_page('IATI Registry - Organisation Dataset Page', '//*[@id="content"]/div[3]/div/section[1]/div[1]/form/h2')
 
-    @pytest.fixture
-    def registry_organization_file_count(cls):
-        return cls._locate_int_on_page('IATI Registry - organization Dataset Page', '//*[@id="content"]/div[3]/div/section[1]/div[1]/form/h2')
-
-    @pytest.fixture
-    def registry_all_org_file_count(cls, registry_organisation_file_count, registry_organization_file_count):
-        return registry_organisation_file_count + registry_organization_file_count
-
     def test_activity_count_above_min(self, dash_home_activity_count, dash_home_unique_activity_count, dash_activities_activity_count, dash_activities_unique_activity_count, datastore_api_activity_count):
         """
         Test to ensure the unique activity count is above a specified minumum value.
@@ -130,7 +119,6 @@ class TestGlobalConsistency(WebTestBase):
         assert dash_home_activity_count >= dash_home_unique_activity_count
         assert dash_activities_activity_count >= dash_activities_unique_activity_count
 
-    @pytest.mark.xfail
     def test_activity_count_consistency(self, datastore_api_activity_count, dash_home_unique_activity_count):
         """
         Test to ensure the activity count is consistent, within a margin of error,
@@ -168,14 +156,14 @@ class TestGlobalConsistency(WebTestBase):
         assert registry_activity_file_count >= dash_files_activity_file_count * (1 - max_registry_disparity)
         assert registry_activity_file_count <= dash_files_activity_file_count * (1 + max_registry_disparity)
 
-    def test_org_file_count_above_min(self, registry_all_org_file_count, dash_home_org_file_count, dash_files_org_file_count):
+    def test_org_file_count_above_min(self, registry_organisation_file_count, dash_home_org_file_count, dash_files_org_file_count):
         """
         Test to ensure the organisation file count is above a specified minumum value.
         This checks both the dashboard and registry.
         """
         min_file_count = 350
 
-        assert registry_all_org_file_count >= min_file_count
+        assert registry_organisation_file_count >= min_file_count
         assert dash_home_org_file_count >= min_file_count
         assert dash_files_org_file_count >= min_file_count
 
@@ -185,15 +173,15 @@ class TestGlobalConsistency(WebTestBase):
         """
         assert dash_home_org_file_count == dash_files_org_file_count
 
-    def test_organisation_dataset_count_consistency(self, registry_all_org_file_count, dash_home_org_file_count, dash_files_org_file_count):
+    def test_organisation_dataset_count_consistency(self, registry_organisation_file_count, dash_home_org_file_count, dash_files_org_file_count):
         """
         Test to ensure the activity file count is consistent, within a margin of error,
         between the registry and dashboard.
         """
         max_registry_disparity = 0.05
 
-        assert registry_all_org_file_count >= dash_files_org_file_count * (1 - max_registry_disparity)
-        assert registry_all_org_file_count <= dash_files_org_file_count * (1 + max_registry_disparity)
+        assert registry_organisation_file_count >= dash_files_org_file_count * (1 - max_registry_disparity)
+        assert registry_organisation_file_count <= dash_files_org_file_count * (1 + max_registry_disparity)
 
     def test_publisher_count_above_min(self, registry_home_publisher_count, dash_home_publisher_count, dash_publishers_publisher_count):
         """

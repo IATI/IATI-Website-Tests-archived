@@ -4,10 +4,10 @@ from web_test_base import *
 class TestIATIDiscuss(WebTestBase):
     requests_to_load = {
         'IATI Discuss': {
-            'url': 'http://discuss.iatistandard.org/'
+            'url': 'http://discuss.iatistandard.org/?iati-website-tests'
         }
         , 'IATI Discuss Welcome Thread': {
-            'url': 'http://discuss.iatistandard.org/t/welcome-to-iati-discuss/6'
+            'url': 'http://discuss.iatistandard.org/t/welcome-to-iati-discuss/6?iati-website-tests'
         }
     }
 

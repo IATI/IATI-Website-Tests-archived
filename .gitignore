@@ -3,7 +3,7 @@ pyenv/
 travis_test_branch.sh
 
 #
-# Python .gitignore
+# Python
 # https://github.com/github/gitignore/blob/master/Python.gitignore
 #
 
@@ -51,7 +51,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-*.cover
+*,cover
 .hypothesis/
 
 # Translations

@@ -1,6 +1,7 @@
 import pytest
 from web_test_base import *
 
+@pytest.mark.xfail(strict=True)
 class TestIATIRegistry(WebTestBase):
     requests_to_load = {
         'IATI Registry Homepage - http, no www': {

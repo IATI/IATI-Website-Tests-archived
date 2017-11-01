@@ -13,6 +13,12 @@ class TestIATIDashboard(WebTestBase):
         'Page Generated Late in Process': {
             'url': 'http://dashboard.iatistandard.org/element/iati-activity_result_description_narrative.html'
         }
+        , 'Dashboard Publisher Index Page': {
+            'url': 'http://dashboard.iatistandard.org/publisher/'
+        }
+        , 'Dashboard Activity Index Page': {
+            'url': 'http://dashboard.iatistandard.org/activities/'
+        }
     }
 
     def test_contains_links(self, loaded_request):

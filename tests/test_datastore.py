@@ -66,7 +66,6 @@ class TestIATIDatastore(WebTestBase):
 
         assert result.startswith(content_type)
 
-    @pytest.mark.xfail
     @pytest.mark.parametrize("target_request", ["Datastore list of datasets"])
     def test_last_successful_fetch(self, target_request):
         """Test that the datastore has successfully fetched data within the expected time frame."""

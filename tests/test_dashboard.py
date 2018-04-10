@@ -23,7 +23,6 @@ class TestIATIDashboard(WebTestBase):
 
         assert "https://github.com/IATI/IATI-Dashboard/" in result
 
-    @pytest.mark.xfail
     def test_recently_generated(self, loaded_request):
         """
         Tests that the dashboard was generated in the past 7 days.

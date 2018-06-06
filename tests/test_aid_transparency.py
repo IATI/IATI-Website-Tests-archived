@@ -134,7 +134,7 @@ class TestAidTransparency(WebTestBase):
         post_title_str = result_post_title[0]
 
         assert 'UN pooled funds' in post_title_str
-        assert 'significant contribution to transparency and open data' in post_container_contents
+        assert 'SOME RANDOM TEXT THAT WILL NOT APPEAR!!' in post_container_contents
 
     @pytest.mark.parametrize("target_request", ["Newsletter Subscription Page"])
     def test_newsletter_subscription_page_form(self, target_request):

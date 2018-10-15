@@ -150,6 +150,7 @@ class TestGlobalConsistency(WebTestBase):
         assert dash_home_activity_count >= dash_home_unique_activity_count
         assert dash_activities_activity_count >= dash_activities_unique_activity_count
 
+    @pytest.mark.skip(reason="Data is often wrong due to delays between dashboard regeneration cycles")
     def test_activity_count_consistency_datastore_dashboard(self, datastore_api_activity_count, dash_home_unique_activity_count):
         """
         Test to ensure the activity count is consistent, within a margin of error,

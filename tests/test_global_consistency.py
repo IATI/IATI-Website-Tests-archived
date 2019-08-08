@@ -27,7 +27,7 @@ class TestGlobalConsistency(WebTestBase):
             'url': 'http://dashboard.iatistandard.org/files.html'
         },
         'IATI Dashboard - Publisher Page': {
-            'url': 'http://dashboard.iatistandard.org/publishers.html'
+            'url': 'http://publishingstats.iatistandard.org/'
         },
         'Datastore API - Activity Count': {
             'url': 'http://datastore.iatistandard.org/api/1/access/activity.xml?limit=0', 'min_response_size': 295

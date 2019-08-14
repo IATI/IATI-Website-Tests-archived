@@ -168,7 +168,7 @@ class TestGlobalConsistency(WebTestBase):
         Test to ensure the activity count is consistent, within a margin of error,
         between the registry and the IATI Standard homepage.
         """
-        max_registry_disparity = 0.03
+        max_registry_disparity = 0.05
 
         assert registry_activity_count >= standard_home_activity_count * (1 - max_registry_disparity)
         assert registry_activity_count <= standard_home_activity_count * (1 + max_registry_disparity)

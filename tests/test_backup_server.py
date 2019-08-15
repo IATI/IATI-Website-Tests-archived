@@ -83,26 +83,6 @@ class TestIATIBackupServer:
         else:
             return None
 
-    def test_github_backups_made(self):
-        """
-        Tests that Github backups have been made in the expected way - i.e.
-        - There are at least 115 files present
-        - Every file is greater than 0 bytes
-        - All files have been modified (i.e. updated) the past day
-        """
-        # datetime_yesterday = datetime.now(timezone.utc) - timedelta(days=1)
-        github_backups = self._get_file_or_directory_contents("/home/backups/backup-github/github-backups")
-
-        github_backups_filesizes = [v['filesize'] for v in github_backups.values()]
-        # github_backups_last_modified_dates = [v['last_modified'] for v in github_backups.values()]
-        smallest_backup_filesize = min(github_backups_filesizes)
-        # oldest_last_modified_date = min(github_backups_last_modified_dates)
-
-        assert len(github_backups) >= 115
-        assert smallest_backup_filesize > 0
-        # TODO Check behaviour of backup script, so that following test is reliable
-        # assert oldest_last_modified_date > datetime_yesterday
-
     def test_at_least_1GB_disk_space_available(self):
         """
         Test that there is sufficient space available for future backups.

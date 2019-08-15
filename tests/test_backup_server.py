@@ -14,20 +14,19 @@ class TestIATIBackupServer:
         Create a SSH client for use by test methods.
         Login credentials are stored as environment variables.
         """
-        hostname = os.environ.get("backup_server_hostname")
+        self.hostname = os.environ.get("backup_server_hostname") or "109.123.87.40"
         username = os.environ.get("backup_server_username")
         password = os.environ.get("backup_server_password")
 
-        if not any([hostname, username, password]):
+        if not any([self.hostname, username, password]):
             pytest.skip("Environment variables not set for backups")
-
         try:
             self.client = paramiko.SSHClient()
             self.client.load_system_host_keys()
             self.client.set_missing_host_key_policy(
                 paramiko.AutoAddPolicy()
             )
-            self.client.connect(hostname, username=username, password=password, timeout=5)
+            self.client.connect(self.hostname, username=username, password=password, timeout=5)
         except AuthenticationException:
             print("Authentication failed, please verify your credentials: %s")
         except SSHException as sshException:
@@ -42,7 +41,7 @@ class TestIATIBackupServer:
         Test that the server can be pinged. This indicates that it is
         at least online
         """
-        server_address = "83.170.85.222"
+        server_address = self.hostname
 
         result = os.system("ping -c 1 {}".format(server_address))
 

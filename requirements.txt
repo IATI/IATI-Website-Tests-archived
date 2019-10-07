@@ -3,6 +3,6 @@ lxml==4.4.1
 paramiko==2.6.0 # rq.filter: <3.0
 pytest==3.10.1 # rq.filter: <4.0
 python-dateutil==2.8.0 # rq.filter: <3.0
-pytz==2019.2
+pytz==2019.3
 requests==2.22.0 # rq.filter: <3.0
 flake8==3.7.8

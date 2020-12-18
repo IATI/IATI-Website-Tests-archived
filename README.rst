@@ -1,6 +1,9 @@
 IATI Website Tests
 ==================
 
+.. image:: https://github.com/IATI/IATI-Website-Tests/workflows/CI/badge.svg
+    :target: https://github.com/IATI/IATI-Website-Tests/actions
+
 .. image:: https://travis-ci.org/IATI/IATI-Website-Tests.svg?branch=master
     :target: https://travis-ci.org/IATI/IATI-Website-Tests
 .. image:: https://requires.io/github/IATI/IATI-Website-Tests/requirements.svg?branch=master

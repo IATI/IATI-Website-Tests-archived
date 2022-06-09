@@ -1,4 +1,4 @@
-IATI Website Tests
+[Archived] IATI Website Tests
 ==================
 
 .. image:: https://travis-ci.org/IATI/IATI-Website-Tests.svg?branch=master
